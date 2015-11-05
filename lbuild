@@ -52,6 +52,8 @@ def process(tex):
 
         ret = subprocess.run(cmd, timeout=30, stdin=DEVNULL, stdout=DEVNULL, stderr=DEVNULL)
 
+        print("Done compiling!")
+
         pdf = path.join(tmp, job + ".pdf")
         log = path.join(tmp, job + ".log")
 
