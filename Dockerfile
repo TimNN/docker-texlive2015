@@ -18,6 +18,8 @@ RUN apt-get -y update \
 
 ENV ENGINE=lualatex
 
+ENV PYTHONUNBUFFERED=1
+
 VOLUME ["/data"]
 WORKDIR /data
 
