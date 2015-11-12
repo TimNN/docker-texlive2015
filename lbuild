@@ -50,7 +50,7 @@ def process(tex):
 
         print("Now compiling {}".format(tex))
 
-        ret = subprocess.run(cmd, timeout=30, stdin=DEVNULL, stdout=DEVNULL, stderr=DEVNULL)
+        ret = subprocess.run(cmd, timeout=300, stdin=DEVNULL, stdout=DEVNULL, stderr=DEVNULL)
 
         print("Done compiling!")
 
