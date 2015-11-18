@@ -15,6 +15,7 @@ def main():
     try:
         real_main()
     except:
+        print("Compiling unsuccessfull.")
         # raise
         sys.exit(1)
 
