@@ -11,6 +11,8 @@ RUN apt-get -y update \
  && apt-get -y update \
  && apt-get -y install \
         git \
+        graphviz \
+        python3-pip \
         python3.5 \
         texlive-full \
  && apt-get -y clean \
