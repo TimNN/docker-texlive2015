@@ -35,7 +35,7 @@ def process(tex):
     job = path.splitext(path.basename(tex))[0]
     rel_base = path.dirname(path.abspath(tex))
 
-    engine = os.getenv('ENGINE', 'lualatex')
+    engine = os.getenv('LATEXENGINE', 'lualatex')
 
     assert engine in ["lualatex", "pdflatex", "xelatex"]
 
