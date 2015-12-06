@@ -3,6 +3,8 @@ MAINTAINER Tim Neumann <mail@timnn.me>
 
 ARG DEBIAN_FRONTEND=noninteractive
 
+ADD 01-nodoc.conf /etc/dpkg/dpkg.cfg.d/01-nodoc
+
 RUN apt-get -y update \
  && apt-get -y upgrade \
  && apt-get -y install \
