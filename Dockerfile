@@ -24,6 +24,8 @@ ENV LATEXENGINE=lualatex
 
 ENV PYTHONUNBUFFERED=1
 
+RUN luaotfload-tool --update
+
 VOLUME ["/data"]
 WORKDIR /data
 
