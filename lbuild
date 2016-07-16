@@ -25,12 +25,12 @@ def main():
 def real_main():
     parser = argparse.ArgumentParser(description='Building LaTeX documents')
     parser.add_argument('texpath', type=str, help='Path to tex file')
-    parser.add_argument('--latexEngine', type=str, help='LaTeX engine to use. Possible engines are "lualatex", "pdflatex", "xelatex".',
-        default=os.getenv('LATEXENGINE', 'lualatex'))
+    parser.add_argument('--latex-engine', type=str, help='LaTeX engine to use. Possible engines are "lualatex", "pdflatex", "xelatex".',
+        choices=['lualatex', 'pdflatex', 'xelatex'] , default=os.getenv('LATEXENGINE', 'lualatex'))
 
     args = parser.parse_args()
 
-    process(args.texpath, args.latexEngine)
+    process(args.texpath, args.latex_engine)
 
 def process(tex, engine):
     assert path.isfile(tex)
