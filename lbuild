@@ -5,6 +5,7 @@ import re
 import shutil
 import subprocess
 import sys
+import argparse
 
 
 from os import path
@@ -22,20 +23,22 @@ def main():
     sys.exit(0)
 
 def real_main():
-    assert len(sys.argv) == 2
+    parser = argparse.ArgumentParser(description='Building LaTeX documents')
+    parser.add_argument('texpath', type=str, help='Path to tex file')
+    parser.add_argument('--latex-engine', type=str, help='LaTeX engine to use. Possible engines are "lualatex", "pdflatex", "xelatex".',
+        choices=['lualatex', 'pdflatex', 'xelatex'] , default=os.getenv('LATEXENGINE', 'lualatex'))
+    parser.add_argument('--timeout', type=int, help='LaTeX compilation timeout in seconds', default=300)
 
-    tex = sys.argv[1]
+    args = parser.parse_args()
 
-    process(tex)
+    process(args.texpath, args.latex_engine, args.timeout)
 
-def process(tex):
+def process(tex, engine, timeout):
     assert path.isfile(tex)
     assert tex.endswith(".tex")
 
     job = path.splitext(path.basename(tex))[0]
     rel_base = path.dirname(path.abspath(tex))
-
-    engine = os.getenv('LATEXENGINE', 'lualatex')
 
     assert engine in ["lualatex", "pdflatex", "xelatex"]
 
@@ -51,7 +54,11 @@ def process(tex):
 
         print("Now compiling {}".format(tex))
 
-        ret = subprocess.run(cmd, timeout=300, stdin=DEVNULL, stdout=DEVNULL, stderr=DEVNULL)
+        try:
+            ret = subprocess.run(cmd, timeout=timeout, stdin=DEVNULL, stdout=DEVNULL, stderr=DEVNULL)
+        except subprocess.TimeoutExpired:
+            print("Timeout exceeded!")
+            raise
 
         print("Done compiling!")
 
