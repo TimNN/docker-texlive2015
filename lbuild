@@ -27,12 +27,13 @@ def real_main():
     parser.add_argument('texpath', type=str, help='Path to tex file')
     parser.add_argument('--latex-engine', type=str, help='LaTeX engine to use. Possible engines are "lualatex", "pdflatex", "xelatex".',
         choices=['lualatex', 'pdflatex', 'xelatex'] , default=os.getenv('LATEXENGINE', 'lualatex'))
+    parser.add_argument('--timeout', type=int, help='LaTeX compilation timeout in seconds', default=300)
 
     args = parser.parse_args()
 
-    process(args.texpath, args.latex_engine)
+    process(args.texpath, args.latex_engine, args.timeout)
 
-def process(tex, engine):
+def process(tex, engine, timeout):
     assert path.isfile(tex)
     assert tex.endswith(".tex")
 
@@ -53,7 +54,11 @@ def process(tex, engine):
 
         print("Now compiling {}".format(tex))
 
-        ret = subprocess.run(cmd, timeout=300, stdin=DEVNULL, stdout=DEVNULL, stderr=DEVNULL)
+        try:
+            ret = subprocess.run(cmd, timeout=timeout, stdin=DEVNULL, stdout=DEVNULL, stderr=DEVNULL)
+        except subprocess.TimeoutExpired:
+            print("Timeout exceeded!")
+            raise
 
         print("Done compiling!")
 
