@@ -16,6 +16,7 @@ RUN apt-get -y update \
  && apt-get -y update \
  && apt-get -y install \
         git \
+        wget \
         graphviz \
         python3-pip \
         python3.5 \
