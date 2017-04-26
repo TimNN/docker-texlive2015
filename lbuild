@@ -48,7 +48,7 @@ def process(tex, engine, timeout):
         shutil.rmtree(tmp)
         # Inspired by http://stackoverflow.com/a/35118551
         # Copies the directory structure but not the files itself in order to compile included files in subdirectories
-        shutil.copytree(os.path.dirname(tex), tmp, copy_function=shutil.copy,
+        shutil.copytree(os.path.dirname(os.path.abspath(tex)), tmp, copy_function=shutil.copy,
                         ignore=lambda x, y: [r for r in y if os.path.isfile(x + os.sep + r)])
 
         if not path.isfile(tex):
